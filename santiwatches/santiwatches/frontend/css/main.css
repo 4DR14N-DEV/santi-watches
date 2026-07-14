@@ -4,6 +4,24 @@
  * escritorio viven en responsive.css con min-width media queries.
  */
 
+/* ============ FUENTES LOCALES ============ */
+
+@font-face {
+  font-family: 'DelicateElegance';
+  src: url('/assets/fonts/DelicateElegance-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DelicateElegance';
+  src: url('/assets/fonts/DelicateElegance-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-bone);
@@ -113,8 +131,10 @@ body {
 }
 
 .btn-ghost {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-family: 'DelicateElegance', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  font-weight: 400;
   letter-spacing: 0.05em;
   color: var(--color-bone);
   border: 1px solid var(--color-hairline);
@@ -228,8 +248,10 @@ body {
 }
 
 .hero__subtitle {
-  font-size: 1rem;
-  font-weight: 300;
+  font-family: 'DelicateElegance', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  font-weight: 400;
   color: var(--color-bone-dim);
   line-height: 1.7;
   max-width: 42ch;
@@ -260,8 +282,10 @@ body {
 
 .btn-primary {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-family: 'DelicateElegance', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  font-weight: 400;
   letter-spacing: 0.06em;
   color: var(--color-bg);
   background: var(--color-gold);
