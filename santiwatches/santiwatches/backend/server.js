@@ -35,7 +35,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // --- Seguridad ---
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
 
 // CORS: en desarrollo acepta todo; en producción whitelist desde CORS_ORIGIN
 const corsOrigin = process.env.CORS_ORIGIN;
