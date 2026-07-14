@@ -239,4 +239,14 @@ export function revealFab(fabEl) {
   );
 }
 
-export const SantiAnimations = { playIntro, revealCard, pulseCard, revealFab };
+export function removeCard(cardEl) {
+  return gsap.to(cardEl, {
+    opacity: 0,
+    scale: 0.9,
+    y: -20,
+    duration: 0.4,
+    ease: 'power2.in',
+  });
+}
+
+export const SantiAnimations = { playIntro, revealCard, pulseCard, revealFab, removeCard };

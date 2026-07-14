@@ -1,189 +1,114 @@
+<div align="center">
+
 # SantiWatches
 
-Tienda web de relojes de alta gama. Sitio de una sola página con
-panel de administrador integrado: el público ve el catálogo, el
-administrador (un único usuario) puede agregar relojes y marcarlos
-como agotados sin borrarlos.
+**Relojería de alta gama — Medellín, Colombia**
 
-Instagram de referencia: [@santiwatchesco](https://www.instagram.com/santiwatchesco/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.5+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.x-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![SQLite](https://img.shields.io/badge/SQLite-node:sqlite-003B57?style=flat-square&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![GSAP](https://img.shields.io/badge/GSAP-3.x-88CE02?style=flat-square&logo=greensock&logoColor=white)](https://gsap.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+
+[![Deploy Frontend](https://img.shields.io/badge/Deploy-Frontend-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://santi-watches.vercel.app)
+[![Deploy Backend](https://img.shields.io/badge/Deploy-Backend-000000?style=for-the-badge&logo=render&logoColor=white)](https://santi-watches.onrender.com)
 
 ---
+
+E-commerce de relojes de lujo con panel de administrador integrado.
+El público ve el catálogo; el administrador gestiona piezas, precios y disponibilidad.
+
+**[Ver sitio en vivo →](https://santi-watches.vercel.app)**
+
+</div>
+
+---
+
+## Stack
+
+| Capa | Tecnología |
+|------|-----------|
+| Frontend | HTML, CSS, JavaScript (ES Modules), Vite |
+| Backend | Node.js, Express, JWT, Multer |
+| Base de datos | SQLite (node:sqlite) |
+| Animaciones | GSAP + ScrollTrigger |
+| Deploy | Vercel (frontend) + Render (backend) |
+| Storage | Cloudinary (vídeos hero) |
+
+## Funcionalidades
+
+- **Catálogo público** — Grid de relojes con imágenes, nombre, descripción y precio
+- **Panel de administrador** — CRUD completo de piezas
+- **Marcar agotado** — Oculta visualmente sin borrar el producto
+- **Vídeo hero** — Fondo con crossfade entre dos vídeos de Cloudinary
+- **Animaciones GSAP** — Preloader, reveal de cards, parallax, efecto glow
+- **Diseño responsive** — Mobile-first, 1-4 columnas según breakpoint
+- **Seguridad** — bcrypt, JWT httpOnly, rate limiting, CORS whitelist
+
+## Quick Start
+
+```bash
+# Backend
+cd backend
+npm install
+cp .env.example .env   # Editar credenciales
+npm start              # http://localhost:3000
+
+# Desarrollo (hot reload)
+npm run dev
+```
 
 ## Arquitectura
 
 ```
 santiwatches/
-├── backend/          → API en Node.js + Express, patrón MVC
-│   ├── config/        → conexión a la base de datos y seed del admin
-│   ├── models/        → acceso a datos (SQLite vía node:sqlite)
-│   ├── controllers/    → lógica de negocio
-│   ├── routes/         → definición de endpoints
-│   ├── middleware/     → autenticación (JWT) y subida de imágenes (Multer)
-│   ├── uploads/         → fotos de los relojes subidas por el admin
-│   ├── database/        → archivo .sqlite (se crea solo, no va en git)
-│   └── server.js
+├── backend/
+│   ├── config/        → DB connection + admin seed
+│   ├── models/        → SQLite data access
+│   ├── controllers/   → Business logic
+│   ├── routes/        → API endpoints
+│   ├── middleware/     → JWT auth + Multer uploads
+│   └── server.js      → Express app
 │
-└── frontend/         → HTML + CSS + JavaScript (vanilla, CommonJS no aplica aquí
-                         porque el frontend corre en el navegador, no en Node)
-    ├── css/            → reset, variables (design tokens), componentes, responsive
-    ├── js/             → api.js, ui.js, animations.js (GSAP), auth.js, watches.js, main.js
-    ├── vendor/gsap/    → GSAP servido localmente (sin depender de un CDN externo)
+└── frontend/
+    ├── css/           → Design tokens, components, responsive
+    ├── js/            → ES modules (api, auth, animations, watches)
+    ├── assets/fonts/  → DelicateElegance
     └── index.html
 ```
 
-### Por qué `node:sqlite` en vez de `better-sqlite3`
+## API Endpoints
 
-El proyecto usa el módulo **nativo** `node:sqlite` (disponible desde
-Node 22.5+) en vez de paquetes como `better-sqlite3` o `sqlite3`.
-Esos paquetes traen bindings en C++ que hay que compilar con
-`node-gyp` al instalar — lo cual falla si la máquina no tiene
-herramientas de compilación (build-essential, python, etc.), algo
-muy común en WSL recién instalado. `node:sqlite` viene incluido en
-Node: `npm install` es instantáneo y no depende de nada externo.
+| Método | Ruta | Auth | Descripción |
+|--------|------|------|-------------|
+| POST | `/api/auth/login` | — | Login, retorna cookie httpOnly |
+| POST | `/api/auth/logout` | — |Cierra sesión |
+| GET | `/api/auth/me` | ✓ | Usuario autenticado |
+| GET | `/api/watches` | — | Listar relojes |
+| GET | `/api/watches/:id` | — | Detalle de reloj |
+| POST | `/api/watches` | ✓ | Crear reloj (multipart) |
+| PATCH | `/api/watches/:id/toggle-sold-out` | ✓ | Alternar disponibilidad |
+| DELETE | `/api/watches/:id` | ✓ | Eliminar reloj |
 
-Vas a ver una advertencia como esta al arrancar el servidor:
+## Environment Variables
 
+```env
+PORT=3000
+JWT_SECRET=secreto_largo_y_aleatorio
+NODE_ENV=development
+ADMIN_USERNAME=tu_usuario
+ADMIN_PASSWORD=tu_password
+CORS_ORIGIN=http://localhost:5173
 ```
-(node:XXXX) ExperimentalWarning: SQLite is an experimental feature and might change at any time
-```
 
-Es normal, no es un error. El módulo funciona de forma estable para
-un proyecto de este tamaño.
-
----
-
-## Requisitos
-
-- **Node.js 22.5 o superior** (por `node:sqlite`). Verifica tu versión:
-  ```bash
-  node --version
-  ```
-  Si tienes una versión menor, instala Node 22 LTS (por ejemplo con
-  `nvm install 22`).
-
----
-
-## Instalación y arranque
-
-### 1. Backend
+## Tests
 
 ```bash
 cd backend
-npm install
-cp .env.example .env
+npm test              # 40 tests (Jest + supertest)
 ```
 
-Abre `.env` y define tus propias credenciales de administrador antes
-de arrancar por primera vez:
+## Licencia
 
-```
-PORT=3000
-JWT_SECRET=cambia_este_secreto_por_uno_largo_y_aleatorio
-NODE_ENV=development
-ADMIN_USERNAME=tu_usuario
-ADMIN_PASSWORD=tu_password_segura
-```
-
-`ADMIN_USERNAME` y `ADMIN_PASSWORD` solo se usan **una vez**, la
-primera vez que arranca el servidor y la base de datos está vacía:
-en ese momento se crea el único usuario administrador con esas
-credenciales (contraseña ya cifrada con bcrypt). Si cambias esas
-variables después, no va a crear un segundo usuario ni a actualizar
-la contraseña — para eso tendrías que borrar `backend/database/` y
-dejar que se regenere desde cero.
-
-Arranca el servidor:
-
-```bash
-npm start
-```
-
-Deberías ver:
-
-```
-SantiWatches backend corriendo en http://localhost:3000
-```
-
-El backend **también sirve el frontend** (no necesitas un servidor
-aparte para el HTML/CSS/JS): abre `http://localhost:3000` en tu
-navegador y ya está.
-
-### 2. Modo desarrollo (con recarga automática)
-
-```bash
-npm run dev
-```
-
-Usa `nodemon`, reinicia el servidor cada vez que guardas un cambio
-en el backend. (Los cambios de frontend no necesitan reiniciar nada,
-solo refrescar el navegador).
-
----
-
-## Flujo de uso
-
-- **Visitante público**: entra a `http://localhost:3000`, ve el
-  catálogo de relojes. No puede editar nada.
-- **Administrador**: hace clic en "Ingresar" (arriba a la derecha),
-  entra con las credenciales de `.env`. Al iniciar sesión aparece:
-  - Un botón flotante dorado (+) abajo a la derecha, para agregar
-    un nuevo reloj.
-  - Un botón "Marcar agotado" / "Marcar disponible" debajo de cada
-    reloj existente.
-- **Marcar como agotado** no borra el reloj ni lo saca del catálogo:
-  solo le pone una cinta diagonal "AGOTADO" y reduce la opacidad de
-  toda la card. El producto sigue estando ahí, visible, para que el
-  público sepa que existió/existe la pieza.
-- **El precio es opcional**: si el admin no lo llena al crear el
-  reloj, la card pública muestra "Disponible bajo consulta" en vez
-  de un precio.
-
----
-
-## Endpoints de la API
-
-| Método | Ruta                                  | Auth  | Descripción                             |
-|--------|----------------------------------------|-------|------------------------------------------|
-| POST   | `/api/auth/login`                     | No    | Inicia sesión, entrega cookie httpOnly    |
-| POST   | `/api/auth/logout`                    | No    | Cierra sesión                             |
-| GET    | `/api/auth/me`                        | Sí    | Devuelve el usuario autenticado           |
-| GET    | `/api/watches`                        | No    | Lista todos los relojes                   |
-| GET    | `/api/watches/:id`                    | No    | Detalle de un reloj                       |
-| POST   | `/api/watches`                        | Sí    | Crea un reloj (multipart/form-data)       |
-| PATCH  | `/api/watches/:id/toggle-sold-out`    | Sí    | Alterna el estado agotado/disponible      |
-| DELETE | `/api/watches/:id`                    | Sí    | Elimina un reloj definitivamente          |
-
-Las rutas marcadas "Sí" requieren la cookie de sesión (JWT), que el
-navegador envía automáticamente después de hacer login desde la
-misma página.
-
----
-
-## Notas de diseño
-
-- **Mobile-first**: todo el CSS se escribe primero pensando en
-  pantallas pequeñas; los ajustes de tablet/escritorio están en
-  `css/responsive.css` con `min-width`.
-- **Paleta**: carbón (`#0a0a09`) + dorado champán (`#c9a84c`) + hueso
-  (`#e8e1d3`), buscando transmitir prestigio sin caer en un dorado
-  "bling".
-- **Tipografía**: Cormorant Garamond (títulos, serif elegante),
-  Inter (cuerpo de texto), JetBrains Mono (precios y datos técnicos).
-- **Animaciones GSAP**: preloader con manecilla que gira, entrada
-  escalonada del hero, revelado de cards al hacer scroll
-  (ScrollTrigger), pulso de confirmación al cambiar el estado de un
-  reloj.
-- GSAP se sirve desde `frontend/vendor/gsap/` (archivos locales, no
-  un CDN externo), para que el sitio no dependa de terceros.
-
----
-
-## Seguridad
-
-- Las contraseñas se guardan con hash `bcrypt`, nunca en texto plano.
-- La sesión se maneja con JWT en una cookie **httpOnly** (no en
-  `localStorage`), lo que reduce el riesgo de robo del token vía XSS.
-- Los nombres y descripciones de los relojes se escapan antes de
-  insertarse en el DOM, para evitar inyección de HTML.
-- El único usuario administrador se crea desde variables de entorno,
-  nunca hay un formulario público de registro.
+MIT © [4DR14N-DEV](https://github.com/4DR14N-DEV)

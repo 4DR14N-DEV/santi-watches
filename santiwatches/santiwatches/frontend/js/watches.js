@@ -58,6 +58,9 @@ function buildCardElement(watch) {
       <button type="button" class="watch-card__admin-btn" data-action="toggle-sold-out">
         ${watch.is_sold_out ? 'Marcar disponible' : 'Marcar agotado'}
       </button>
+      <button type="button" class="watch-card__admin-btn watch-card__admin-btn--danger" data-action="delete">
+        Eliminar
+      </button>
     </div>
   `;
 
@@ -85,25 +88,47 @@ export async function loadWatches() {
 }
 
 grid.addEventListener('click', async (event) => {
-  const button = event.target.closest('[data-action="toggle-sold-out"]');
+  const button = event.target.closest('[data-action]');
   if (!button) return;
 
+  const action = button.dataset.action;
   const card = button.closest('.watch-card');
   const id = card.dataset.id;
 
-  button.disabled = true;
-  try {
-    const { watch } = await SantiAPI.watches.toggleSoldOut(id);
-    card.classList.toggle('watch-card--sold-out', Boolean(watch.is_sold_out));
-    button.textContent = watch.is_sold_out ? 'Marcar disponible' : 'Marcar agotado';
-    SantiAnimations.pulseCard(card);
-    SantiUI.showToast(
-      watch.is_sold_out ? 'Reloj marcado como agotado.' : 'Reloj marcado como disponible.'
-    );
-  } catch (err) {
-    SantiUI.showToast(err.message, 'error');
-  } finally {
-    button.disabled = false;
+  if (action === 'toggle-sold-out') {
+    button.disabled = true;
+    try {
+      const { watch } = await SantiAPI.watches.toggleSoldOut(id);
+      card.classList.toggle('watch-card--sold-out', Boolean(watch.is_sold_out));
+      button.textContent = watch.is_sold_out ? 'Marcar disponible' : 'Marcar agotado';
+      SantiAnimations.pulseCard(card);
+      SantiUI.showToast(
+        watch.is_sold_out ? 'Reloj marcado como agotado.' : 'Reloj marcado como disponible.'
+      );
+    } catch (err) {
+      SantiUI.showToast(err.message, 'error');
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  if (action === 'delete') {
+    if (!confirm('¿Eliminar este reloj permanentemente?')) return;
+    
+    button.disabled = true;
+    try {
+      await SantiAPI.watches.delete(id);
+      await SantiAnimations.removeCard(card);
+      card.remove();
+      SantiUI.showToast('Reloj eliminado correctamente.');
+      
+      if (grid.children.length === 0) {
+        emptyState.hidden = false;
+      }
+    } catch (err) {
+      SantiUI.showToast(err.message, 'error');
+      button.disabled = false;
+    }
   }
 });
 

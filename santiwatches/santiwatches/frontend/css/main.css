@@ -4,24 +4,6 @@
  * escritorio viven en responsive.css con min-width media queries.
  */
 
-/* ============ FUENTES LOCALES ============ */
-
-@font-face {
-  font-family: 'DelicateElegance';
-  src: url('/assets/fonts/DelicateElegance-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'DelicateElegance';
-  src: url('/assets/fonts/DelicateElegance-Italic.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
 body {
   background: var(--color-bg);
   color: var(--color-bone);
@@ -131,9 +113,9 @@ body {
 }
 
 .btn-ghost {
-  font-family: 'DelicateElegance', serif;
+  font-family: 'Space Mono', monospace;
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.05em;
   color: var(--color-bone);
@@ -248,14 +230,15 @@ body {
 }
 
 .hero__subtitle {
-  font-family: 'DelicateElegance', serif;
+  font-family: 'Space Mono', monospace;
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   font-weight: 400;
   color: var(--color-bone-dim);
-  line-height: 1.7;
+  line-height: 1.8;
   max-width: 42ch;
   margin: 0 auto var(--space-4);
+  letter-spacing: 0.02em;
 }
 
 .hero__scroll-cue {
@@ -282,11 +265,12 @@ body {
 
 .btn-primary {
   display: inline-block;
-  font-family: 'DelicateElegance', serif;
+  font-family: 'Space Mono', monospace;
   font-style: italic;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   font-weight: 400;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-bg);
   background: var(--color-gold);
   padding: 0.9rem 2rem;
