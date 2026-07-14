@@ -6,6 +6,21 @@
  * pantallas más grandes, con min-width.
  */
 
+/* ============ AJUSTES MÓVIL (base) ============ */
+
+.hero__subtitle {
+  font-size: 1rem;
+}
+
+.collection__glow {
+  width: 300px;
+  height: 300px;
+}
+
+.divider {
+  padding: var(--space-4) var(--container-pad);
+}
+
 /* ============ TABLET (>= 640px) ============ */
 @media (min-width: 40em) {
   .collection__grid {
@@ -24,6 +39,19 @@
 
   .modal--wide {
     max-width: 560px;
+  }
+
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+
+  .collection__glow {
+    width: 450px;
+    height: 450px;
+  }
+
+  .divider {
+    padding: var(--space-5) var(--container-pad);
   }
 }
 
@@ -55,6 +83,19 @@
     height: 64px;
     bottom: var(--space-4);
     right: var(--space-4);
+  }
+
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+
+  .collection__glow {
+    width: 600px;
+    height: 600px;
+  }
+
+  .divider {
+    padding: var(--space-5) var(--container-pad);
   }
 }
 
