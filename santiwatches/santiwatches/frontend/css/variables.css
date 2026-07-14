@@ -1,0 +1,56 @@
+/**
+ * css/variables.css
+ *
+ * Sistema de diseño de SantiWatches.
+ *
+ * Paleta — pensada para transmitir status y prestigio, no lujo
+ * genérico: carbón profundo (no negro puro, para que las fotos de
+ * los relojes respiren) + un dorado champán desaturado (no dorado
+ * "bling", sino el tono de una vitrina de joyería fina) + hueso para
+ * el texto principal.
+ *
+ * Tipografía — Cormorant Garamond para titulares (la misma familia
+ * de serif clásica que usan casas relojeras suizas en su papelería),
+ * Inter para cuerpo de texto (legible, neutra), JetBrains Mono para
+ * precios y datos técnicos (referencia numérica = mono, como en un
+ * certificado de autenticidad).
+ */
+
+:root {
+  /* --- Color --- */
+  --color-bg: #0a0a09;
+  --color-surface: #141210;
+  --color-surface-raised: #1c1916;
+  --color-gold: #c9a84c;
+  --color-gold-soft: #a8925f;
+  --color-bone: #e8e1d3;
+  --color-bone-dim: #a9a296;
+  --color-hairline: #322e28;
+  --color-danger: #a8493f;
+  --color-danger-bg: rgba(168, 73, 63, 0.12);
+
+  /* --- Tipografía --- */
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* --- Espaciado (escala 8px) --- */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4.5rem;
+  --space-7: 7rem;
+
+  /* --- Layout --- */
+  --container-max: 1280px;
+  --container-pad: 1.25rem;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* --- Transiciones --- */
+  --ease-elegant: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.25s;
+  --duration-medium: 0.5s;
+}

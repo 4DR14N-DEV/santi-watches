@@ -1,0 +1,19 @@
+/**
+ * css/admin.css — ajustes visuales que solo aplican cuando el
+ * administrador ha iniciado sesión (body.is-admin).
+ */
+
+body.is-admin .fab-add {
+  display: flex;
+}
+
+.admin-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold-soft);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+}

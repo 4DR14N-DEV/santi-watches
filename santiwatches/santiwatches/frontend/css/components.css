@@ -1,0 +1,285 @@
+/**
+ * css/components.css — card de reloj, modales, formularios, toast.
+ */
+
+/* ============ CARD DE RELOJ ============ */
+
+.watch-card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: opacity var(--duration-medium) var(--ease-elegant),
+              border-color var(--duration-fast) var(--ease-elegant);
+}
+
+.watch-card:hover {
+  border-color: var(--color-gold-soft);
+}
+
+.watch-card__image-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--color-surface-raised);
+}
+
+.watch-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-elegant);
+}
+
+.watch-card:hover .watch-card__image {
+  transform: scale(1.045);
+}
+
+.watch-card__body {
+  padding: var(--space-3);
+}
+
+.watch-card__name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--color-bone);
+  margin-bottom: var(--space-1);
+}
+
+.watch-card__description {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-bone-dim);
+  margin-bottom: var(--space-2);
+}
+
+.watch-card__price {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--color-gold);
+  letter-spacing: 0.02em;
+}
+
+.watch-card__price--query {
+  color: var(--color-bone-dim);
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+/* --- Cinta de agotado --- */
+
+.watch-card--sold-out {
+  opacity: 0.42;
+}
+
+.watch-card__ribbon {
+  position: absolute;
+  top: 18px;
+  left: -34px;
+  z-index: 2;
+  width: 140px;
+  padding: 0.35rem 0;
+  text-align: center;
+  background: var(--color-danger);
+  color: var(--color-bone);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  display: none;
+}
+
+.watch-card--sold-out .watch-card__ribbon {
+  display: block;
+}
+
+/* --- Controles de administrador sobre la card --- */
+
+.watch-card__admin-bar {
+  display: none;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3) var(--space-3);
+}
+
+body.is-admin .watch-card__admin-bar {
+  display: flex;
+}
+
+.watch-card__admin-btn {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  padding: 0.5rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
+  color: var(--color-bone-dim);
+  transition: border-color var(--duration-fast) var(--ease-elegant),
+              color var(--duration-fast) var(--ease-elegant);
+}
+
+.watch-card__admin-btn:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.watch-card__admin-btn--danger:hover {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+/* ============ FAB AGREGAR (solo admin) ============ */
+
+.fab-add {
+  position: fixed;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  z-index: 60;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.35);
+  transition: transform var(--duration-fast) var(--ease-elegant);
+}
+
+.fab-add:hover {
+  transform: scale(1.08) rotate(90deg);
+}
+
+/* ============ MODALES ============ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(10, 10, 9, 0.82);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: var(--space-4) var(--space-3) var(--space-5);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-3);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--color-bone-dim);
+}
+
+.modal__close:hover {
+  color: var(--color-gold);
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--color-bone);
+  margin-bottom: var(--space-3);
+}
+
+/* ============ FORMULARIOS ============ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field__label {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--color-bone-dim);
+}
+
+.field input,
+.field textarea {
+  background: var(--color-bg);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  color: var(--color-bone);
+  font-size: 0.95rem;
+  transition: border-color var(--duration-fast) var(--ease-elegant);
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--color-gold);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field--file input[type="file"] {
+  padding: 0.6rem;
+  font-size: 0.8rem;
+}
+
+.field__file-name {
+  font-size: 0.72rem;
+  color: var(--color-hairline);
+}
+
+.form__error {
+  font-size: 0.82rem;
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+}
+
+/* ============ TOAST ============ */
+
+.toast {
+  position: fixed;
+  bottom: var(--space-3);
+  left: 50%;
+  z-index: 300;
+  transform: translate(-50%, 0);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-gold-soft);
+  color: var(--color-bone);
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  max-width: calc(100vw - 2.5rem);
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.toast--error {
+  border-color: var(--color-danger);
+}

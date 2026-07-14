@@ -1,0 +1,66 @@
+/**
+ * css/responsive.css
+ *
+ * Enfoque mobile-first: todos los archivos anteriores definen el
+ * layout base para móvil. Aquí solo agregamos lo que cambia en
+ * pantallas más grandes, con min-width.
+ */
+
+/* ============ TABLET (>= 640px) ============ */
+@media (min-width: 40em) {
+  .collection__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-overlay {
+    align-items: center;
+  }
+
+  .modal {
+    max-width: 480px;
+    border-radius: var(--radius-md);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  .modal--wide {
+    max-width: 560px;
+  }
+}
+
+/* ============ ESCRITORIO ESTÁNDAR (>= 1024px) ============ */
+@media (min-width: 64em) {
+  :root {
+    --container-pad: 2.5rem;
+  }
+
+  .header {
+    padding: var(--space-3) 0;
+  }
+
+  .collection__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .collection {
+    padding-top: var(--space-7);
+  }
+
+  .watch-card__name {
+    font-size: 1.45rem;
+  }
+
+  .fab-add {
+    width: 64px;
+    height: 64px;
+    bottom: var(--space-4);
+    right: var(--space-4);
+  }
+}
+
+/* ============ PANTALLAS GRANDES (>= 1440px) ============ */
+@media (min-width: 90em) {
+  .collection__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
