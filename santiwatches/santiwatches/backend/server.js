@@ -17,6 +17,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 
 const { initSchema } = require('./config/database');
@@ -32,8 +33,17 @@ seedAdmin();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// --- Seguridad ---
+app.use(helmet());
+
+// CORS: en desarrollo acepta todo; en producción whitelist desde CORS_ORIGIN
+const corsOrigin = process.env.CORS_ORIGIN;
+const corsOptions = corsOrigin
+  ? { origin: corsOrigin.split(',').map((s) => s.trim()), credentials: true }
+  : { origin: true, credentials: true };
+app.use(cors(corsOptions));
+
 // --- Middleware globales ---
-app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
