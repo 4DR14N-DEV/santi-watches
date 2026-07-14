@@ -34,6 +34,11 @@ seedAdmin();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Render y otros PaaS usan reverse proxy — necesario para rate-limit y cookies
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 // --- Seguridad ---
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },

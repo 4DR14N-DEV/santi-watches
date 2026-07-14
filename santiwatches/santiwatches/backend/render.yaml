@@ -9,7 +9,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: JWT_SECRET
-        generateValue: true
+        generateValue: false
       - key: ADMIN_USERNAME
         sync: false
       - key: ADMIN_PASSWORD
