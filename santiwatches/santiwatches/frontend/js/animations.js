@@ -69,6 +69,89 @@ function initHeroVideoScrollFade() {
   });
 }
 
+/* ============ DIVISORIO DECORATIVO ============ */
+
+function initDivider() {
+  const divider = document.querySelector('.divider');
+  if (!divider) return;
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: divider,
+      start: 'top 85%',
+      toggleActions: 'play none none none',
+    },
+  });
+
+  tl.to('.divider__line--left', {
+    opacity: 1,
+    scaleX: 1,
+    duration: 0.8,
+    ease: 'power2.out',
+  })
+    .to(
+      '.divider__line--right',
+      {
+        opacity: 1,
+        scaleX: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+    .to(
+      '.divider__diamond',
+      {
+        scale: 1,
+        rotation: 45,
+        duration: 0.5,
+        ease: 'back.out(1.7)',
+      },
+      '-=0.4'
+    );
+}
+
+/* ============ COLECCIÓN: PARALLAX + GLOW ============ */
+
+function initCollectionEffects() {
+  const collection = document.querySelector('.collection');
+  if (!collection) return;
+
+  gsap.from('.collection__header', {
+    y: 40,
+    opacity: 0,
+    duration: 0.9,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: collection,
+      start: 'top 80%',
+      toggleActions: 'play none none none',
+    },
+  });
+
+  gsap.to('.collection__glow', {
+    opacity: 1,
+    duration: 1.2,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: collection,
+      start: 'top 70%',
+      toggleActions: 'play none none none',
+    },
+  });
+
+  gsap.to('.collection__glow', {
+    y: -60,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: collection,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true,
+    },
+  });
+}
+
 export function playIntro() {
   const preloader = document.getElementById('preloader');
   const hand = preloader.querySelector('.preloader__hand');
@@ -116,21 +199,24 @@ export function playIntro() {
   heroVideos[0]?.play().catch(() => {});
   startSlideshow();
   initHeroVideoScrollFade();
+  initDivider();
+  initCollectionEffects();
 }
 
 export function revealCard(cardEl, index) {
   gsap.fromTo(
     cardEl,
-    { y: 40, opacity: 0 },
+    { y: 60, opacity: 0, scale: 0.95 },
     {
       y: 0,
       opacity: 1,
-      duration: 0.7,
+      scale: 1,
+      duration: 0.8,
       ease: 'power3.out',
-      delay: (index % 6) * 0.06,
+      delay: (index % 6) * 0.1,
       scrollTrigger: {
         trigger: cardEl,
-        start: 'top 88%',
+        start: 'top 90%',
         toggleActions: 'play none none none',
       },
     }

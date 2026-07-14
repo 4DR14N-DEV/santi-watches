@@ -283,12 +283,41 @@ body {
   text-align: center;
 }
 
+/* ============ DIVISORIO DECORATIVO ============ */
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: var(--space-5) var(--container-pad);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.divider__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold-soft), transparent);
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.divider__diamond {
+  width: 8px;
+  height: 8px;
+  background: var(--color-gold);
+  transform: rotate(45deg) scale(0);
+  flex-shrink: 0;
+}
+
 /* ============ COLECCIÓN ============ */
 
 .collection {
   max-width: var(--container-max);
   margin: 0 auto;
   padding: var(--space-6) var(--container-pad) var(--space-7);
+  position: relative;
 }
 
 .collection__header {
@@ -296,10 +325,26 @@ body {
   margin-bottom: var(--space-5);
 }
 
+.collection__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+}
+
 .collection__grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-4);
+  position: relative;
+  z-index: 1;
 }
 
 .collection__empty {
