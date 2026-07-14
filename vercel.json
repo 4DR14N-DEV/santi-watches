@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd santiwatches/santiwatches/frontend && npm install && npm run build",
+  "outputDirectory": "santiwatches/santiwatches/frontend/dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

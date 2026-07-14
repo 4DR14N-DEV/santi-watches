@@ -5,7 +5,7 @@
  * Ahora es un módulo ES con exports nombrados.
  */
 
-const BASE_URL = '';
+const BASE_URL = import.meta.env.VITE_API_URL || '';
 
 async function request(path, options = {}) {
   const response = await fetch(BASE_URL + path, {
