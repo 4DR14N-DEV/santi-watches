@@ -3,17 +3,12 @@
  *
  * Sistema de diseño de SantiWatches.
  *
- * Paleta — pensada para transmitir status y prestigio, no lujo
- * genérico: carbón profundo (no negro puro, para que las fotos de
- * los relojes respiren) + un dorado champán desaturado (no dorado
- * "bling", sino el tono de una vitrina de joyería fina) + hueso para
- * el texto principal.
+ * Paleta — carbón profundo + dorado champán desaturado + hueso.
  *
- * Tipografía — Cormorant Garamond para titulares (la misma familia
- * de serif clásica que usan casas relojeras suizas en su papelería),
- * Inter para cuerpo de texto (legible, neutra), JetBrains Mono para
- * precios y datos técnicos (referencia numérica = mono, como en un
- * certificado de autenticidad).
+ * Tipografía — Playfair Display para titulares (serif de alto
+ * contraste estilo Didot, inspirada en Jacob & Co), EB Garamond
+ * para cuerpo de texto (serif clásica y elegante), JetBrains Mono
+ * para precios y datos técnicos.
  */
 
 :root {
@@ -30,8 +25,8 @@
   --color-danger-bg: rgba(168, 73, 63, 0.12);
 
   /* --- Tipografía --- */
-  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Playfair Display', 'Times New Roman', serif;
+  --font-body: 'EB Garamond', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* --- Espaciado (escala 8px) --- */
