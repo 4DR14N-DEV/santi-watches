@@ -385,11 +385,11 @@ body {
 }
 
 .brand__name--footer {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 
 .footer__tagline {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   color: var(--color-bone-dim);
 }
 
@@ -403,7 +403,7 @@ body {
 
 .footer__link {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: var(--color-gold-soft);
   transition: color var(--duration-fast) var(--ease-elegant);
 }
@@ -414,11 +414,11 @@ body {
 
 .footer__sep {
   color: var(--color-hairline);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .footer__credit {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: var(--color-hairline);
   margin-top: var(--space-1);
 }
@@ -426,7 +426,7 @@ body {
 .footer__github {
   color: var(--color-bone-dim);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   transition: color var(--duration-fast) var(--ease-elegant);
 }
 
