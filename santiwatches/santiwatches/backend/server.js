@@ -51,8 +51,11 @@ app.use(cookieParser());
 // Servimos las imágenes de los relojes subidas por el admin.
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Servimos el frontend estático (HTML, CSS, JS del cliente).
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
+// En desarrollo sirve el frontend raw; en producción sirve el build de Vite
+const frontendDir = process.env.NODE_ENV === 'production'
+  ? path.join(__dirname, '..', 'frontend', 'dist')
+  : path.join(__dirname, '..', 'frontend');
+app.use(express.static(frontendDir));
 
 // --- Rutas de la API ---
 app.use('/api/auth', authRoutes);
@@ -60,7 +63,7 @@ app.use('/api/watches', watchRoutes);
 
 // Cualquier ruta no-API devuelve el index del frontend (SPA simple).
 app.get(/^(?!\/api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+  res.sendFile(path.join(frontendDir, 'index.html'));
 });
 
 // --- Manejo de errores centralizado ---
