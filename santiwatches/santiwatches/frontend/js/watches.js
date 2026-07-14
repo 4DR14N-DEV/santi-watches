@@ -5,7 +5,7 @@
  * Ahora es un módulo ES.
  */
 
-import { SantiAPI } from './api.js';
+import { SantiAPI, API_URL } from './api.js';
 import { SantiUI } from './ui.js';
 import { SantiAnimations } from './animations.js';
 
@@ -42,10 +42,10 @@ function buildCardElement(watch) {
   card.innerHTML = `
     <div class="watch-card__image-wrap">
       <span class="watch-card__ribbon">Agotado</span>
-      <img
-        class="watch-card__image"
-        src="${watch.image_path}"
-        alt="${escapeHtml(watch.name)}"
+        <img
+          class="watch-card__image"
+          src="${API_URL}${watch.image_path}"
+          alt="${escapeHtml(watch.name)}"
         loading="lazy"
       />
     </div>
