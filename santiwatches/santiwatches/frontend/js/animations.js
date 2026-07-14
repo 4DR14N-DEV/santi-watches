@@ -18,6 +18,57 @@ if (prefersReducedMotion) {
   gsap.globalTimeline.timeScale(50);
 }
 
+/* ============ HERO VIDEO SLIDESHOW ============ */
+
+const heroVideos = document.querySelectorAll('.hero__video');
+let currentVideoIndex = 0;
+let slideshowInterval = null;
+
+function startSlideshow() {
+  if (heroVideos.length <= 1) return;
+
+  slideshowInterval = setInterval(() => {
+    const prev = heroVideos[currentVideoIndex];
+    currentVideoIndex = (currentVideoIndex + 1) % heroVideos.length;
+    const next = heroVideos[currentVideoIndex];
+
+    prev.classList.remove('hero__video--active');
+    next.classList.add('hero__video--active');
+    next.play().catch(() => {});
+  }, 5000);
+}
+
+function stopSlideshow() {
+  clearInterval(slideshowInterval);
+}
+
+function initHeroVideoScrollFade() {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+
+  gsap.to('.hero__bg', {
+    opacity: 0,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: hero,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    },
+  });
+
+  gsap.to('.hero__overlay', {
+    opacity: 0,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: hero,
+      start: 'top top',
+      end: '60% top',
+      scrub: true,
+    },
+  });
+}
+
 export function playIntro() {
   const preloader = document.getElementById('preloader');
   const hand = preloader.querySelector('.preloader__hand');
@@ -60,6 +111,11 @@ export function playIntro() {
     repeat: -1,
     ease: 'power1.inOut',
   });
+
+  // Iniciar slideshow de videos y fade al scroll
+  heroVideos[0]?.play().catch(() => {});
+  startSlideshow();
+  initHeroVideoScrollFade();
 }
 
 export function revealCard(cardEl, index) {
