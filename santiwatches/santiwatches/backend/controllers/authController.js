@@ -42,7 +42,7 @@ const AuthController = {
     res.cookie('token', token, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: 'lax',
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 8 * 60 * 60 * 1000, // 8 horas
     });
 
