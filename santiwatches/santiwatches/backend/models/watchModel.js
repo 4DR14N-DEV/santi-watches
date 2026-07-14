@@ -8,13 +8,14 @@
 
 'use strict';
 
-const { db } = require('../config/database');
+const { getDb } = require('../config/database');
 
 const WatchModel = {
   /**
    * Devuelve todos los relojes, más nuevos primero.
    */
   findAll() {
+    const db = getDb();
     const stmt = db.prepare('SELECT * FROM watches ORDER BY created_at DESC');
     return stmt.all();
   },
@@ -23,6 +24,7 @@ const WatchModel = {
    * Busca un reloj por id.
    */
   findById(id) {
+    const db = getDb();
     const stmt = db.prepare('SELECT * FROM watches WHERE id = ?');
     return stmt.get(id);
   },
@@ -33,6 +35,7 @@ const WatchModel = {
    * ya que algunas piezas de alta gama se cotizan solo por consulta.
    */
   create({ name, description, price, imagePath }) {
+    const db = getDb();
     const stmt = db.prepare(`
       INSERT INTO watches (name, description, price, image_path)
       VALUES (?, ?, ?, ?)
@@ -45,6 +48,7 @@ const WatchModel = {
    * Actualiza los campos editables de un reloj.
    */
   update(id, { name, description, price, imagePath }) {
+    const db = getDb();
     const current = this.findById(id);
     if (!current) return null;
 
@@ -70,6 +74,7 @@ const WatchModel = {
    * opacity de la card).
    */
   toggleSoldOut(id) {
+    const db = getDb();
     const current = this.findById(id);
     if (!current) return null;
 
@@ -88,6 +93,7 @@ const WatchModel = {
    * de marcarlo como agotado).
    */
   delete(id) {
+    const db = getDb();
     const stmt = db.prepare('DELETE FROM watches WHERE id = ?');
     const info = stmt.run(id);
     return info.changes > 0;

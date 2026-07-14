@@ -9,7 +9,7 @@
 
 'use strict';
 
-const { db } = require('../config/database');
+const { getDb } = require('../config/database');
 
 const UserModel = {
   /**
@@ -18,6 +18,7 @@ const UserModel = {
    * @returns {object|undefined}
    */
   findByUsername(username) {
+    const db = getDb();
     const stmt = db.prepare('SELECT * FROM users WHERE username = ?');
     return stmt.get(username);
   },
@@ -27,6 +28,7 @@ const UserModel = {
    * @returns {number}
    */
   count() {
+    const db = getDb();
     const stmt = db.prepare('SELECT COUNT(*) AS total FROM users');
     return stmt.get().total;
   },
@@ -37,6 +39,7 @@ const UserModel = {
    * @param {string} passwordHash
    */
   create(username, passwordHash) {
+    const db = getDb();
     const stmt = db.prepare(
       'INSERT INTO users (username, password_hash) VALUES (?, ?)'
     );

@@ -61,6 +61,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`\n  SantiWatches backend corriendo en http://localhost:${PORT}\n`);
-});
+// Solo escuchar si no es test
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`\n  SantiWatches backend corriendo en http://localhost:${PORT}\n`);
+  });
+}
+
+module.exports = app;

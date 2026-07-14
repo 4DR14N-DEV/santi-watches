@@ -24,21 +24,36 @@ const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 const fs = require('fs');
 
-const DB_DIR = path.join(__dirname, '..', 'database');
-const DB_PATH = path.join(DB_DIR, 'santiwatches.sqlite');
+let db;
 
-// Nos aseguramos de que exista el directorio /database
-if (!fs.existsSync(DB_DIR)) {
-  fs.mkdirSync(DB_DIR, { recursive: true });
+/**
+ * Inicializa la conexión a la base de datos.
+ * En producción usa un archivo; en tests usa :memory:.
+ */
+function connect(dbPath) {
+  if (dbPath === ':memory:') {
+    db = new DatabaseSync(':memory:');
+  } else {
+    const DB_DIR = path.dirname(dbPath);
+    if (!fs.existsSync(DB_DIR)) {
+      fs.mkdirSync(DB_DIR, { recursive: true });
+    }
+    db = new DatabaseSync(dbPath);
+  }
+
+  db.exec('PRAGMA foreign_keys = ON;');
+  if (dbPath !== ':memory:') {
+    db.exec('PRAGMA journal_mode = WAL;');
+  }
+
+  return db;
 }
 
-const db = new DatabaseSync(DB_PATH);
-
-// Buenas prácticas de SQLite para una app web pequeña:
-// - WAL mejora la concurrencia lectura/escritura.
-// - foreign_keys asegura integridad referencial.
-db.exec('PRAGMA journal_mode = WAL;');
-db.exec('PRAGMA foreign_keys = ON;');
+// Conexión por defecto (producción) - solo si no es test
+const PROD_DB_PATH = path.join(__dirname, '..', 'database', 'santiwatches.sqlite');
+if (process.env.NODE_ENV !== 'test') {
+  connect(PROD_DB_PATH);
+}
 
 /**
  * Crea las tablas si no existen todavía. Se llama una sola vez
@@ -68,4 +83,8 @@ function initSchema() {
   `);
 }
 
-module.exports = { db, initSchema, DB_PATH };
+function getDb() {
+  return db;
+}
+
+module.exports = { db, getDb, connect, initSchema, DB_PATH: PROD_DB_PATH };
