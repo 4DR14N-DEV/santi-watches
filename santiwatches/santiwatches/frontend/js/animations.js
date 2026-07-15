@@ -22,24 +22,21 @@ if (prefersReducedMotion) {
 
 const heroVideos = document.querySelectorAll('.hero__video');
 let currentVideoIndex = 0;
-let slideshowInterval = null;
 
 function startSlideshow() {
   if (heroVideos.length <= 1) return;
 
-  slideshowInterval = setInterval(() => {
-    const prev = heroVideos[currentVideoIndex];
-    currentVideoIndex = (currentVideoIndex + 1) % heroVideos.length;
-    const next = heroVideos[currentVideoIndex];
+  heroVideos.forEach((video) => {
+    video.addEventListener('ended', () => {
+      const prev = heroVideos[currentVideoIndex];
+      currentVideoIndex = (currentVideoIndex + 1) % heroVideos.length;
+      const next = heroVideos[currentVideoIndex];
 
-    prev.classList.remove('hero__video--active');
-    next.classList.add('hero__video--active');
-    next.play().catch(() => {});
-  }, 8000);
-}
-
-function stopSlideshow() {
-  clearInterval(slideshowInterval);
+      prev.classList.remove('hero__video--active');
+      next.classList.add('hero__video--active');
+      next.play().catch(() => {});
+    });
+  });
 }
 
 function initHeroVideoScrollFade() {
