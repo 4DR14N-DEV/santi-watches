@@ -35,7 +35,7 @@ function startSlideshow() {
     prev.classList.remove('hero__video--active');
     next.classList.add('hero__video--active');
     next.play().catch(() => {});
-  }, 5000);
+  }, 8000);
 }
 
 function stopSlideshow() {
