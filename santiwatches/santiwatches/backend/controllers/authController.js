@@ -49,6 +49,7 @@ const AuthController = {
     return res.json({
       message: 'Sesión iniciada correctamente.',
       user: { id: user.id, username: user.username },
+      token,
     });
   },
 

@@ -2,15 +2,42 @@
  * js/api.js
  *
  * Capa única de comunicación con el backend.
- * Ahora es un módulo ES con exports nombrados.
+ * Token guardado en localStorage y enviado como Authorization header
+ * para soporte cross-origin (Vercel → Render).
  */
 
 const API_URL = import.meta.env.VITE_API_URL || '';
+const TOKEN_KEY = 'santiwatches_token';
+
+function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+function setToken(token) {
+  localStorage.setItem(TOKEN_KEY, token);
+}
+
+function clearToken() {
+  localStorage.removeItem(TOKEN_KEY);
+}
 
 async function request(path, options = {}) {
+  const token = getToken();
+  const headers = { ...options.headers };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  // No setear Content-Type si es FormData (el browser lo setea solo con el boundary)
+  if (!(options.body instanceof FormData) && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json';
+  }
+
   const response = await fetch(API_URL + path, {
     credentials: 'include',
     ...options,
+    headers,
   });
 
   let data = null;
@@ -30,14 +57,19 @@ async function request(path, options = {}) {
 
 export const SantiAPI = {
   auth: {
-    login(username, password) {
-      return request('/api/auth/login', {
+    async login(username, password) {
+      const data = await request('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+      if (data.token) {
+        setToken(data.token);
+      }
+      return data;
     },
     logout() {
+      clearToken();
       return request('/api/auth/logout', { method: 'POST' });
     },
     me() {

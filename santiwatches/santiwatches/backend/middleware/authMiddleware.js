@@ -15,7 +15,15 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_inseguro_cambiar';
 
 function requireAuth(req, res, next) {
-  const token = req.cookies && req.cookies.token;
+  // Prioridad: Authorization header > cookie
+  let token = null;
+
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.slice(7);
+  } else if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  }
 
   if (!token) {
     return res.status(401).json({ error: 'No autenticado. Inicia sesión para continuar.' });
@@ -23,7 +31,7 @@ function requireAuth(req, res, next) {
 
   try {
     const payload = jwt.verify(token, JWT_SECRET);
-    req.user = payload; // { id, username }
+    req.user = payload;
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Sesión inválida o expirada. Inicia sesión de nuevo.' });
