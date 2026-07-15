@@ -62,6 +62,7 @@
 .watch-card__price {
   font-family: var(--font-mono);
   font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
   color: var(--color-gold);
   letter-spacing: 0.02em;
 }

@@ -142,7 +142,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--space-4);
+  padding: clamp(3rem, 10vh, 7rem) var(--space-4);
   overflow: hidden;
 }
 
@@ -271,17 +271,20 @@ body {
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-bg);
-  background: var(--color-gold);
+  color: var(--color-gold);
+  background: transparent;
+  border: 1px solid var(--color-gold);
   padding: 0.9rem 2rem;
   border-radius: var(--radius-sm);
   transition: transform var(--duration-fast) var(--ease-elegant),
-              background var(--duration-fast) var(--ease-elegant);
+              background var(--duration-fast) var(--ease-elegant),
+              color var(--duration-fast) var(--ease-elegant);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background: var(--color-bone);
+  background: var(--color-gold);
+  color: var(--color-bg);
   transform: translateY(-2px);
 }
 
@@ -385,11 +388,11 @@ body {
 }
 
 .brand__name--footer {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 
 .footer__tagline {
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   color: var(--color-bone-dim);
 }
 
@@ -403,22 +406,39 @@ body {
 
 .footer__link {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
   color: var(--color-gold-soft);
+  position: relative;
   transition: color var(--duration-fast) var(--ease-elegant);
+}
+
+.footer__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transition: width var(--duration-fast) var(--ease-elegant);
 }
 
 .footer__link:hover {
   color: var(--color-gold);
 }
 
+.footer__link:hover::after {
+  width: 100%;
+}
+
 .footer__sep {
   color: var(--color-hairline);
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 }
 
 .footer__credit {
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   color: var(--color-hairline);
   margin-top: var(--space-1);
 }
@@ -426,12 +446,29 @@ body {
 .footer__github {
   color: var(--color-bone-dim);
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  position: relative;
   transition: color var(--duration-fast) var(--ease-elegant);
+}
+
+.footer__github::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transition: width var(--duration-fast) var(--ease-elegant);
 }
 
 .footer__github:hover {
   color: var(--color-gold);
+}
+
+.footer__github:hover::after {
+  width: 100%;
 }
 
 /* ============ FOCUS VISIBLE (accesibilidad) ============ */
